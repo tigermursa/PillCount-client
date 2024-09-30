@@ -12,40 +12,7 @@ import UserCreateModal from "./UserCreateModal";
 
 const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
-const avaters = [
-  {
-    id: "1",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707753/icon-demo/mother_cbayex.webp",
-  },
-  {
-    id: "2",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707667/icon-demo/father_upk5kd.webp",
-  },
-  {
-    id: "3",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707545/icon-demo/granpa_y2mrww.webp",
-  },
-  {
-    id: "4",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707544/icon-demo/littlebrother_i0dhtc.webp",
-  },
-  {
-    id: "5",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707544/icon-demo/sister_epad6l.webp",
-  },
-  {
-    id: "6",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707544/icon-demo/usericon_v73sbp.webp",
-  },
-  {
-    id: "7",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707544/icon-demo/granma_jlawu7.webp",
-  },
-  {
-    id: "8",
-    icon: "https://res.cloudinary.com/dvwmhlyd6/image/upload/v1727707544/icon-demo/bigbrother_vrw9ay.webp",
-  },
-];
+
 
 const UserShowAndAdd = () => {
   const { data: users, error } = useSWR(getAllUsersURL, fetcher);
@@ -107,7 +74,6 @@ const UserShowAndAdd = () => {
         isModalVisible={isModalVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}
-        avaters={avaters}
       />
     </div>
   );
