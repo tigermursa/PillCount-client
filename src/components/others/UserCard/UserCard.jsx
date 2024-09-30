@@ -64,16 +64,18 @@ const UserCard = ({ user }) => {
       title: "Medicine Name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Days Remaining",
       dataIndex: "daysRemaining",
       key: "daysRemaining",
+      align: "center",
     },
     {
-      title: "Total Tablets",
+      title: "Tablets Remaining",
       dataIndex: "totalTablets",
-      key: "totalTablets",
+      align: "center",
     },
   ];
 
@@ -99,16 +101,8 @@ const UserCard = ({ user }) => {
       {/* Ant Design Modal */}
       <Modal
         title={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span>{user.name}</span>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => setIsFormVisible(true)}
-              style={{ marginLeft: "auto" }}
-            >
-              Add Medicine
-            </Button>
+          <div className="text font-semibold mb-4">
+            <p>My {user?.relation}</p>
           </div>
         }
         visible={isModalVisible}
@@ -122,6 +116,15 @@ const UserCard = ({ user }) => {
           <p>Loading...</p>
         ) : (
           <>
+            <Button
+              type="dashed"
+              icon={<PlusOutlined />}
+              onClick={() => setIsFormVisible(true)}
+              style={{ marginLeft: "auto" }}
+              className="mb-3"
+            >
+              Add Medicine
+            </Button>
             <Table
               dataSource={data.medicines}
               columns={medicineColumns}
@@ -159,15 +162,6 @@ const UserCard = ({ user }) => {
             name="tabletsToTake"
             rules={[
               { required: true, message: "Please input tablets to take!" },
-            ]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            label="Days Remaining"
-            name="daysRemaining"
-            rules={[
-              { required: true, message: "Please input days remaining!" },
             ]}
           >
             <Input type="number" />
