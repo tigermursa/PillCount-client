@@ -102,7 +102,6 @@ const UserShowAndAdd = () => {
         <PlusOutlined style={{ fontSize: "32px" }} />
       </div>
       {/* Modal to add new user */}
-      , ,
       <UserCreateModal
         form={form}
         isModalVisible={isModalVisible}
