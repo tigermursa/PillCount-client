@@ -23,7 +23,7 @@ const UserCard = ({ user }) => {
   const [form] = Form.useForm(); // To handle form data
 
   // SWR for fetching single user data
-  const { data, error} = useSWR(
+  const { data, error } = useSWR(
     isModalVisible ? `http://localhost:5000/api/user/${user._id}` : null,
     fetcher
   );
@@ -157,15 +157,6 @@ const UserCard = ({ user }) => {
           <p>Loading...</p>
         ) : (
           <>
-            <Button
-              type="dashed"
-              icon={<PlusOutlined />}
-              onClick={() => setIsFormVisible(true)}
-              style={{ marginBottom: "1rem" }}
-            >
-              Add Medicine
-            </Button>
-
             <Table
               dataSource={data.medicines}
               columns={medicineColumns}
@@ -175,10 +166,20 @@ const UserCard = ({ user }) => {
 
             <div className="flex justify-end gap-4 mt-4">
               <Button
+                type="dashed"
+                icon={<PlusOutlined />}
+                onClick={() => setIsFormVisible(true)}
+                style={{ marginBottom: "1rem" }}
+              >
+                Add Medicine
+              </Button>
+              <Button
                 icon={<ArrowUpOutlined />}
                 onClick={showUpdateModal}
                 type="dashed"
-              >Profile</Button>
+              >
+                Profile
+              </Button>
               <Popconfirm
                 title="Are you sure to delete this user?"
                 onConfirm={handleDelete}
