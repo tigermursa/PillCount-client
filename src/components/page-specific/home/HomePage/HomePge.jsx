@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, InputNumber } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr"; // Import mutate
 import { fetcher, createUser } from "@/utils/userAPI"; // Ensure correct path
 import UserCard from "@/components/others/UserCard/UserCard";
 import { toast } from "react-toastify"; // Import toast
 
-const getUserURL = "http://localhost:5000/api/user/66f9b99e9467be90f9899b10";
+const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
 const HomePge = () => {
-  const { data: user, error } = useSWR(getUserURL, fetcher);
+  const { data: users, error } = useSWR(getAllUsersURL, fetcher);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
@@ -20,16 +20,20 @@ const HomePge = () => {
     setIsModalVisible(true);
   };
 
-  // Handle form submission to create a new user
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
       await createUser(values);
       form.resetFields();
       setIsModalVisible(false);
-      toast.success("User created successfully!"); // Success toast
+
+      // Revalidate the users list after creating a new user
+      mutate(getAllUsersURL); // This will re-fetch the users list in real-time
+
+      // Show success toast without any icons
+      toast.success("User created successfully!");
     } catch (error) {
-      toast.error("Failed to create user. Please try again."); // Error toast
+      toast.error("Failed to create user. Please try again.");
       console.error(error);
     }
   };
@@ -40,16 +44,18 @@ const HomePge = () => {
   };
 
   if (error) return <div>Error loading user data</div>;
-  if (!user) return <div>Loading...</div>;
+  if (!users) return <div>Loading...</div>;
 
   return (
-    <div className="flex space-x-8 justify-center mt-10">
-      {/* Display user card */}
-      <UserCard user={user} />
+    <div className="flex flex-wrap space-x-8 justify-center mt-10">
+      {/* Display user cards for each user */}
+      {users.map((user) => (
+        <UserCard key={user.id} user={user} />
+      ))}
 
       {/* Plus card to add new user */}
       <div
-        className="border rounded-lg shadow-lg p-4 w-64 flex justify-center items-center cursor-pointer bg-white"
+        className="border rounded-lg shadow-lg p-4 w-40 h-40 flex justify-center items-center cursor-pointer bg-white"
         onClick={showModal}
       >
         <PlusOutlined style={{ fontSize: "32px" }} />
