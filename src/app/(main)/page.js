@@ -1,9 +1,9 @@
-import HeroSection from "@/components/page-specific/home/HeroSection/HeroSection";
+import HomePge from "@/components/page-specific/home/HomePage/HomePge";
 
 const page = () => {
   return (
     <div>
-      <HeroSection />
+      <HomePge />
     </div>
   );
 };
