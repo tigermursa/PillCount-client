@@ -1,5 +1,6 @@
 
 import UserShowAndAdd from "./UserShowAndAdd/UserShowAndAdd";
+import "./HomePage.css"
 
 const HomePge = () => {
   return (

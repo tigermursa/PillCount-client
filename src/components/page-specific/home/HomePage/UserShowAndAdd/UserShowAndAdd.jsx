@@ -57,7 +57,7 @@ const UserShowAndAdd = () => {
     <div className="flex flex-wrap space-x-8 justify-center items-center mt-10 h-screen">
       {/* Display user cards for each user */}
       {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <UserCard key={user._id} user={user} />
       ))}
       {/* Plus card to add new user */}
       <div
