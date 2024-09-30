@@ -7,6 +7,7 @@ import useSWR, { mutate } from "swr"; // Import mutate
 import { fetcher, createUser } from "@/utils/userAPI"; // Ensure correct path
 import UserCard from "@/components/others/UserCard/UserCard";
 import { toast } from "react-toastify"; // Import toast
+import LoaderA from "@/components/ui/Loader/LoaderA/LoaderA";
 
 const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
@@ -44,7 +45,12 @@ const HomePge = () => {
   };
 
   if (error) return <div>Error loading user data</div>;
-  if (!users) return <div>Loading...</div>;
+  if (!users)
+    return (
+      <div>
+        <LoaderA />
+      </div>
+    );
 
   return (
     <div className="flex flex-wrap space-x-8 justify-center mt-10">
