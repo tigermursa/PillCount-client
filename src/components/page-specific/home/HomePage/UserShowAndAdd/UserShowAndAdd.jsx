@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { Modal, Form, Input, InputNumber, Select } from "antd"; // Select imported here
+import { useState } from "react";
+import { Form } from "antd"; // Select imported here
 import { PlusOutlined } from "@ant-design/icons";
 import useSWR, { mutate } from "swr"; // Import mutate for re-fetching
 import { fetcher, createUser } from "@/utils/userAPI"; // Ensure correct path
 import UserCard from "@/components/others/UserCard/UserCard";
 import { toast } from "react-toastify"; // Import toast
 import LoaderA from "@/components/ui/Loader/LoaderA/LoaderA";
+import UserCreateModal from "./UserCreateModal";
 
 const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
@@ -93,7 +94,6 @@ const UserShowAndAdd = () => {
       {users.map((user) => (
         <UserCard key={user.id} user={user} />
       ))}
-
       {/* Plus card to add new user */}
       <div
         className="border rounded-lg shadow-lg p-4 w-40 h-40 flex justify-center items-center cursor-pointer bg-white"
@@ -101,62 +101,15 @@ const UserShowAndAdd = () => {
       >
         <PlusOutlined style={{ fontSize: "32px" }} />
       </div>
-
       {/* Modal to add new user */}
-      <Modal
-        title="Add New User"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={{ name: "", age: null, relation: "", image: null }}
-        >
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Please input the name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="age"
-            label="Age"
-            rules={[{ required: true, message: "Please input the age!" }]}
-          >
-            <InputNumber min={0} className="w-full" />
-          </Form.Item>
-          <Form.Item
-            name="relation"
-            label="Relation"
-            rules={[{ required: true, message: "Please input the relation!" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          {/* Avatar Selector */}
-          <Form.Item
-            name="image" // This is where the avatar ID will be stored (as `image`)
-            label="Select Avatar"
-            rules={[{ required: true, message: "Please select an avatar!" }]}
-          >
-            <Select placeholder="Select an avatar">
-              {avaters.map((avatar) => (
-                <Select.Option key={avatar.id} value={avatar.id}>
-                  <img
-                    src={avatar.icon}
-                    alt={`Avatar ${avatar.id}`}
-                    style={{ width: "30px", marginRight: "10px" }}
-                  />
-                  {`Avatar ${avatar.id}`}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+      , ,
+      <UserCreateModal
+        form={form}
+        isModalVisible={isModalVisible}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        avaters={avaters}
+      />
     </div>
   );
 };
