@@ -12,8 +12,6 @@ import UserCreateModal from "./UserCreateModal";
 
 const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
-
-
 const UserShowAndAdd = () => {
   const { data: users, error } = useSWR(getAllUsersURL, fetcher);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -56,7 +54,7 @@ const UserShowAndAdd = () => {
     );
 
   return (
-    <div className="flex flex-wrap space-x-8 justify-center mt-10">
+    <div className="flex flex-wrap space-x-8 justify-center items-center mt-10 h-screen">
       {/* Display user cards for each user */}
       {users.map((user) => (
         <UserCard key={user.id} user={user} />
