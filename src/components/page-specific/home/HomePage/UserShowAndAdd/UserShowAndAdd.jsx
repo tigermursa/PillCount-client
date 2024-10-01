@@ -9,6 +9,7 @@ import UserCard from "@/components/others/UserCard/UserCard";
 import { toast } from "react-toastify"; // Import toast
 import LoaderA from "@/components/ui/Loader/LoaderA/LoaderA";
 import UserCreateModal from "./UserCreateModal";
+import Error from "@/components/ui/Error/Error";
 
 const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
 
@@ -45,7 +46,7 @@ const UserShowAndAdd = () => {
     setIsModalVisible(false);
   };
 
-  if (error) return <div>Error loading user data</div>;
+  if (error) return <Error />;
   if (!users)
     return (
       <div>
