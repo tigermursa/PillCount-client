@@ -61,7 +61,7 @@ const UserCard = ({ user }) => {
 
   const onFinish = async (values) => {
     try {
-      await fetch(`http://localhost:5000/api/user/${user._id}/medicine`, {
+      await fetch(`http://localhost:5000/api/medicine/${user._id}/medicine`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
