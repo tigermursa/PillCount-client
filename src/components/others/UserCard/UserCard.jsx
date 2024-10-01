@@ -113,17 +113,23 @@ const UserCard = ({ user }) => {
     },
     {
       title: "Days Remaining",
-      dataIndex: "daysRemaining",
       key: "daysRemaining",
       align: "center",
+      render: (record) => {
+        return Math.floor(record.totalTablets / record.tabletsToTake);
+      },
     },
     {
       title: "Tablets Remaining",
       dataIndex: "totalTablets",
       align: "center",
     },
+    {
+      title: "Taking",
+      dataIndex: "tabletsToTake",
+      align: "center",
+    },
   ];
-
   return (
     <>
       <div
