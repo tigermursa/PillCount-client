@@ -13,6 +13,8 @@ import { handleMedicineDelete } from "@/utils/handleMedicineDelete";
 import { handleMedicineEdit } from "@/utils/handleMedicineEdit";
 import { handleMedicineUpdateFinish } from "@/utils/handleMedicineUpdateFinish";
 import { onUpdateUserFinish } from "@/utils/onUpdateUserFinish";
+import { addMedicine } from "@/utils/addMedicine";
+import { handleDeleteUser } from "@/utils/handleDeleteUser";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -69,35 +71,18 @@ const UserCard = ({ user }) => {
     setIsUpdateFormVisible(false);
   };
 
-  const handleDelete = async () => {
-    try {
-      await fetch(`http://localhost:5000/api/user/delete/${user._id}`, {
-        method: "DELETE",
-      });
-      message.success("User deleted successfully!");
-      mutate(getAllUsersURL); // Re-fetch the list of all users after deletion
-      setIsModalVisible(false); // Close the modal
-    } catch (error) {
-      message.error("Failed to delete user.");
-    }
+  const deleteUser = async () => {
+    await handleDeleteUser(
+      user._id,
+      mutate,
+      getAllUsersURL,
+      message,
+      setIsModalVisible
+    );
   };
 
   const onFinish = async (values) => {
-    try {
-      await fetch(`http://localhost:5000/api/medicine/${user._id}/medicine`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      mutate(); // Re-fetch data after adding the medicine
-      message.success("Medicine added successfully!");
-      setIsFormVisible(false); // Close the form
-    } catch (error) {
-      message.error("Failed to add medicine.");
-    }
+    await addMedicine(user._id, values, mutate, message, setIsFormVisible);
   };
 
   const updateUser = async (values) => {
@@ -159,7 +144,7 @@ const UserCard = ({ user }) => {
     showPriceModal,
     setIsMedicineUpdateVisible,
     isMedicineUpdateVisible,
-    handleDelete,
+    deleteUser,
     deleteMedicine,
     editMedicines,
   };

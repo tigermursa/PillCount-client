@@ -19,7 +19,7 @@ const MainModal = ({ mainModalProps }) => {
     showPriceModal,
     setIsMedicineUpdateVisible,
     isMedicineUpdateVisible,
-    handleDelete,
+    deleteUser,
     deleteMedicine,
     editMedicines,
   } = mainModalProps;
@@ -134,7 +134,7 @@ const MainModal = ({ mainModalProps }) => {
               </Button>
               <Popconfirm
                 title="Are you sure to delete this user?"
-                onConfirm={handleDelete}
+                onConfirm={deleteUser}
                 okText="Yes"
                 cancelText="No"
               >
