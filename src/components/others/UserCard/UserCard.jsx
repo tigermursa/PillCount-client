@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Modal, Button, Form, Input, message, Popconfirm } from "antd";
+import { Button, Form, message, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
 import MainModal from "../Modals/MainModal";
 import AddMedicineModal from "../Modals/AddMedicineModal";
 import PriceInfroModal from "../Modals/PriceInfroModal";
+import UpdateUserModal from "../Modals/UpdateUserModal";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -257,6 +258,14 @@ const UserCard = ({ user }) => {
     medicineInfo,
   };
 
+  //props for update user modal
+  const updateUserModalProps = {
+    isUpdateFormVisible,
+    handleFormCancel,
+    onUpdateUserFinish,
+    form,
+  };
+
   return (
     <>
       <div
@@ -285,41 +294,7 @@ const UserCard = ({ user }) => {
       <PriceInfroModal priceInfoModalProps={priceInfoModalProps} />
 
       {/*4 Update User Form Modal */}
-      <Modal
-        title="Update User"
-        visible={isUpdateFormVisible}
-        onCancel={handleFormCancel}
-        footer={null}
-      >
-        <Form form={form} onFinish={onUpdateUserFinish} layout="vertical">
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Please input user name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Age"
-            name="age"
-            rules={[{ required: true, message: "Please input age!" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            label="Relation"
-            name="relation"
-            rules={[{ required: true, message: "Please input relation!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <UpdateUserModal updateUserModalProps={updateUserModalProps} />
     </>
   );
 };
