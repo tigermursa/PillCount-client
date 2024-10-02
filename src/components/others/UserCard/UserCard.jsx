@@ -182,7 +182,8 @@ const UserCard = ({ user }) => {
           key: "actions",
           align: "center",
           render: (medicine) => (
-            <div>
+            //here is the two button
+            <div className="flex">
               <Button
                 icon={<EditOutlined />}
                 onClick={() => handleMedicineEdit(medicine)}
@@ -260,11 +261,12 @@ const UserCard = ({ user }) => {
               </Button>
               <Button
                 type="dashed"
+                icon={<ArrowUpOutlined />}
                 onClick={() =>
                   setIsMedicineUpdateVisible(!isMedicineUpdateVisible)
                 }
               >
-                Update Medicine
+                 Medicine
               </Button>
               <Popconfirm
                 title="Are you sure to delete this user?"
