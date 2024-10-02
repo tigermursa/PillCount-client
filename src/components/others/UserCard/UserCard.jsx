@@ -1,15 +1,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Modal, Table, Button, Form, Input, message, Popconfirm } from "antd";
-import {
-  PlusOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  ArrowUpOutlined,
-  DollarOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
+import MainModal from "../Modals/MainModal";
+import AddMedicineModal from "../Modals/AddMedicineModal";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -227,6 +223,32 @@ const UserCard = ({ user }) => {
       : {},
   ];
 
+  //props for main modal
+  const mainModalProps = {
+    user,
+    isModalVisible,
+    handleCancel,
+    error,
+    data,
+    medicineColumns,
+    setIsFormVisible,
+    showUpdateModal,
+    showPriceModal,
+    setIsMedicineUpdateVisible,
+    isMedicineUpdateVisible,
+    handleDelete,
+  };
+
+  //props for add medicine modal
+  const addMedicineModalProps = {
+    editMedicine,
+    isFormVisible,
+    handleFormCancel,
+    form,
+    handleMedicineUpdateFinish,
+    onFinish,
+  };
+
   return (
     <>
       <div
@@ -245,125 +267,13 @@ const UserCard = ({ user }) => {
         </div>
       </div>
 
-      {/*1. Medicine Information Modal and main modal */}
-      <Modal
-        title={
-          <div className="text font-semibold mb-4">My {user?.relation}</div>
-        }
-        visible={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-        width={1000}
-      >
-        {error ? (
-          <p>Error loading data...</p>
-        ) : !data ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <Table
-              dataSource={data.medicines}
-              columns={medicineColumns}
-              rowKey="_id"
-              pagination={false}
-            />
+      {/*1 Main Modal */}
+      <MainModal mainModalProps={mainModalProps} />
 
-            <div className="flex justify-end gap-4 mt-4">
-              <Button
-                type="dashed"
-                icon={<PlusOutlined />}
-                onClick={() => setIsFormVisible(true)}
-                style={{ marginBottom: "1rem" }}
-              >
-                Add Medicine
-              </Button>
-              <Button
-                icon={<ArrowUpOutlined />}
-                onClick={showUpdateModal}
-                type="dashed"
-              >
-                Profile
-              </Button>
-              <Button
-                icon={<DollarOutlined />}
-                onClick={showPriceModal}
-                type="dashed"
-              >
-                Price
-              </Button>
-              <Button
-                type="dashed"
-                icon={<ArrowUpOutlined />}
-                onClick={() =>
-                  setIsMedicineUpdateVisible(!isMedicineUpdateVisible)
-                }
-              >
-                Medicine
-              </Button>
-              <Popconfirm
-                title="Are you sure to delete this user?"
-                onConfirm={handleDelete}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button icon={<DeleteOutlined />} danger></Button>
-              </Popconfirm>
-            </div>
-          </>
-        )}
-      </Modal>
+      {/*2 Add Medicine Form Modal */}
+      <AddMedicineModal addMedicineModalProps={addMedicineModalProps} />
 
-      {/*2 Add/Edit Medicine Form Modal */}
-      <Modal
-        title={editMedicine ? "Update Medicine" : "Add Medicine"}
-        visible={isFormVisible}
-        onCancel={handleFormCancel}
-        footer={null}
-      >
-        <Form
-          form={form}
-          onFinish={editMedicine ? handleMedicineUpdateFinish : onFinish}
-          layout="vertical"
-        >
-          <Form.Item
-            label="Medicine Name"
-            name="name"
-            rules={[{ required: true, message: "Please input medicine name!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Total Tablets"
-            name="totalTablets"
-            rules={[{ required: true, message: "Please input total tablets!" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            label="Tablets to Take"
-            name="tabletsToTake"
-            rules={[
-              { required: true, message: "Please input tablets to take!" },
-            ]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            label="Price"
-            name="price"
-            rules={[{ required: true, message: "Please input price!" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/*3 //! Price modal */}
+      {/*3 // Price modal */}
       <Modal
         title="Price Status"
         visible={isPriceVisible}
