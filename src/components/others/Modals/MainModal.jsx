@@ -80,12 +80,13 @@ const MainModal = ({ mainModalProps }) => {
       {/*1. Medicine Information Modal and main modal */}
       <Modal
         title={
-          <div className="text font-semibold mb-4">My {user?.relation}</div>
+          <div className="text font-semibold mb-4 ">My {user?.relation}</div>
         }
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={null}
         width={1000}
+        classNames={"transition-all duration-1000"}
       >
         {error ? (
           <p>Error loading data...</p>
