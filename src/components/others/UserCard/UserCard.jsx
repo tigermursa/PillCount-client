@@ -6,6 +6,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ArrowUpOutlined,
+  DollarOutlined,
 } from "@ant-design/icons";
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
@@ -20,6 +21,7 @@ const UserCard = ({ user }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
+  const [isPriceVisible, setIsPriceVisible] = useState(false);
   const [isMedicineUpdateVisible, setIsMedicineUpdateVisible] = useState(false); // Toggle for medicine update buttons
   const [editMedicine, setEditMedicine] = useState(null); // Store the medicine being edited
   const [form] = Form.useForm(); // To handle form data
@@ -42,6 +44,7 @@ const UserCard = ({ user }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
     setIsMedicineUpdateVisible(false);
+    setIsPriceVisible(false);
   };
 
   const handleFormCancel = () => {
@@ -144,6 +147,14 @@ const UserCard = ({ user }) => {
 
   const showUpdateModal = () => {
     setIsUpdateFormVisible(true);
+    form.setFieldsValue({
+      name: user.name,
+      age: user.age,
+      relation: user.relation,
+    });
+  };
+  const showPriceModal = () => {
+    setIsPriceVisible(true);
     form.setFieldsValue({
       name: user.name,
       age: user.age,
@@ -261,13 +272,20 @@ const UserCard = ({ user }) => {
                 Profile
               </Button>
               <Button
+                icon={<DollarOutlined />}
+                onClick={showPriceModal}
+                type="dashed"
+              >
+                Price
+              </Button>
+              <Button
                 type="dashed"
                 icon={<ArrowUpOutlined />}
                 onClick={() =>
                   setIsMedicineUpdateVisible(!isMedicineUpdateVisible)
                 }
               >
-                 Medicine
+                Medicine
               </Button>
               <Popconfirm
                 title="Are you sure to delete this user?"
@@ -331,6 +349,14 @@ const UserCard = ({ user }) => {
           </Form.Item>
         </Form>
       </Modal>
+
+      {/* price modal */}
+      <Modal
+        title="Price Status"
+        visible={isPriceVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >adde price here</Modal>
 
       {/* Update User Form Modal */}
       <Modal
