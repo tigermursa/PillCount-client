@@ -1,7 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Slide, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import SessionWrapper from "@/components/Auth/SessionWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,24 +23,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ToastContainer
-          position="top-center"
-          autoClose={2500}
-          transition={Slide}
-          hideProgressBar
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-        {children}
-      </body>
+      <SessionWrapper>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ToastContainer
+            position="top-center"
+            autoClose={2500}
+            transition={Slide}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+          {children}
+        </body>
+      </SessionWrapper>
     </html>
   );
 }
