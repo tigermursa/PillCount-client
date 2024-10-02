@@ -230,6 +230,15 @@ const UserCard = ({ user }) => {
           >
             <Input type="number" />
           </Form.Item>
+          <Form.Item
+            label="Price"
+            name="price"
+            rules={[
+              { required: true, message: "Please input tprice!" },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
