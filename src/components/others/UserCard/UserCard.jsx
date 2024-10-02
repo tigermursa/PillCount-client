@@ -182,8 +182,8 @@ const UserCard = ({ user }) => {
           key: "actions",
           align: "center",
           render: (medicine) => (
-            //here is the two button
-            <div className="flex">
+            //!here is the two button
+            <div className="flex justify-center">
               <Button
                 icon={<EditOutlined />}
                 onClick={() => handleMedicineEdit(medicine)}
@@ -229,6 +229,7 @@ const UserCard = ({ user }) => {
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={null}
+        width={1000}
       >
         {error ? (
           <p>Error loading data...</p>
