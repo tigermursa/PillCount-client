@@ -222,7 +222,9 @@ const UserCard = ({ user }) => {
 
       {/* Medicine Information Modal */}
       <Modal
-        title={<div className="text font-semibold mb-4">My {user?.relation}</div>}
+        title={
+          <div className="text font-semibold mb-4">My {user?.relation}</div>
+        }
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={null}
@@ -258,7 +260,9 @@ const UserCard = ({ user }) => {
               </Button>
               <Button
                 type="dashed"
-                onClick={() => setIsMedicineUpdateVisible(!isMedicineUpdateVisible)}
+                onClick={() =>
+                  setIsMedicineUpdateVisible(!isMedicineUpdateVisible)
+                }
               >
                 Update Medicine
               </Button>
