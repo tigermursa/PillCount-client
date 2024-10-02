@@ -245,7 +245,7 @@ const UserCard = ({ user }) => {
         </div>
       </div>
 
-      {/* Medicine Information Modal */}
+      {/*1. Medicine Information Modal and main modal */}
       <Modal
         title={
           <div className="text font-semibold mb-4">My {user?.relation}</div>
@@ -313,7 +313,7 @@ const UserCard = ({ user }) => {
         )}
       </Modal>
 
-      {/* Add/Edit Medicine Form Modal */}
+      {/*2 Add/Edit Medicine Form Modal */}
       <Modal
         title={editMedicine ? "Update Medicine" : "Add Medicine"}
         visible={isFormVisible}
@@ -362,7 +362,8 @@ const UserCard = ({ user }) => {
           </Form.Item>
         </Form>
       </Modal>
-      {/* //! Price modal */}
+
+      {/*3 //! Price modal */}
       <Modal
         title="Price Status"
         visible={isPriceVisible}
@@ -393,7 +394,7 @@ const UserCard = ({ user }) => {
         />
       </Modal>
 
-      {/* Update User Form Modal */}
+      {/*4 Update User Form Modal */}
       <Modal
         title="Update User"
         visible={isUpdateFormVisible}
