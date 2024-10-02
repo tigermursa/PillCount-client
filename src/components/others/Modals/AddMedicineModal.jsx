@@ -6,7 +6,7 @@ const AddMedicineModal = ({ addMedicineModalProps }) => {
     isFormVisible,
     handleFormCancel,
     form,
-    handleMedicineUpdateFinish,
+    updateMedicine,
     onFinish,
   } = addMedicineModalProps;
   return (
@@ -19,7 +19,7 @@ const AddMedicineModal = ({ addMedicineModalProps }) => {
       >
         <Form
           form={form}
-          onFinish={editMedicine ? handleMedicineUpdateFinish : onFinish}
+          onFinish={editMedicine ? updateMedicine : onFinish}
           layout="vertical"
         >
           <Form.Item

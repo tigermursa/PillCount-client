@@ -2,6 +2,7 @@ import {
   ArrowUpOutlined,
   DeleteOutlined,
   DollarOutlined,
+  EditOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { Button, Modal, Popconfirm, Table } from "antd";
@@ -13,14 +14,67 @@ const MainModal = ({ mainModalProps }) => {
     handleCancel,
     error,
     data,
-    medicineColumns,
     setIsFormVisible,
     showUpdateModal,
     showPriceModal,
     setIsMedicineUpdateVisible,
     isMedicineUpdateVisible,
     handleDelete,
+    deleteMedicine,
+    editMedicines,
   } = mainModalProps;
+
+  const medicineColumns = [
+    {
+      title: "Medicine Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
+    {
+      title: "Days Remaining",
+      key: "daysRemaining",
+      align: "center",
+      render: (record) => {
+        return Math.floor(record.totalTablets / record.tabletsToTake);
+      },
+    },
+    {
+      title: "Tablets Remaining",
+      dataIndex: "totalTablets",
+      align: "center",
+    },
+    {
+      title: "Taking",
+      dataIndex: "tabletsToTake",
+      align: "center",
+    },
+    isMedicineUpdateVisible
+      ? {
+          title: "Actions",
+          key: "actions",
+          align: "center",
+          render: (medicine) => (
+            //!here is the two button
+            <div className="flex justify-center">
+              <Button
+                icon={<EditOutlined />}
+                onClick={() => editMedicines(medicine)}
+                style={{ marginRight: "8px" }}
+              />
+              <Popconfirm
+                title="Are you sure to delete this medicine?"
+                onConfirm={() => deleteMedicine(medicine._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button icon={<DeleteOutlined />} danger />
+              </Popconfirm>
+            </div>
+          ),
+        }
+      : {},
+  ];
   return (
     <>
       {/*1. Medicine Information Modal and main modal */}

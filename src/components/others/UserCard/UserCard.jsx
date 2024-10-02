@@ -1,13 +1,17 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Button, Form, message, Popconfirm } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Form, message } from "antd";
+
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
+//all 4 modals
 import MainModal from "../Modals/MainModal";
 import AddMedicineModal from "../Modals/AddMedicineModal";
 import PriceInfroModal from "../Modals/PriceInfroModal";
 import UpdateUserModal from "../Modals/UpdateUserModal";
+import { handleMedicineDelete } from "@/utils/handleMedicineDelete";
+import { handleMedicineEdit } from "@/utils/handleMedicineEdit";
+import { handleMedicineUpdateFinish } from "@/utils/handleMedicineUpdateFinish";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,6 +20,7 @@ const defaultImageUrl =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZGm_sSq7ogWAjMwkg3wSab31ddsrjv852EA&s";
 
 const UserCard = ({ user }) => {
+  //all states
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
@@ -112,50 +117,25 @@ const UserCard = ({ user }) => {
     }
   };
 
-  const handleMedicineEdit = (medicine) => {
-    setEditMedicine(medicine);
-    setIsFormVisible(true); // Open the form for editing
-    form.setFieldsValue({
-      name: medicine.name,
-      totalTablets: medicine.totalTablets,
-      tabletsToTake: medicine.tabletsToTake,
-      price: medicine.price,
-    });
+  const updateMedicine = async (values) => {
+    await handleMedicineUpdateFinish(
+      user._id,
+      editMedicine._id,
+      values,
+      mutate,
+      singUserURL,
+      message,
+      setIsFormVisible
+    );
   };
 
-  const handleMedicineUpdateFinish = async (values) => {
-    try {
-      await fetch(
-        `http://localhost:5000/api/user/${user._id}/medicine/${editMedicine._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
-      mutate(singUserURL); // Re-fetch the user's data
-      message.success("Medicine updated successfully!");
-      setIsFormVisible(false);
-    } catch (error) {
-      message.error("Failed to update medicine.");
-    }
+  const deleteMedicine = (medicineId) => {
+    handleMedicineDelete(user._id, medicineId, mutate, singUserURL, message);
   };
 
-  const handleMedicineDelete = async (medicineId) => {
-    try {
-      await fetch(
-        `http://localhost:5000/api/user/${user._id}/medicine/delete/${medicineId}`,
-        { method: "DELETE" }
-      );
-      mutate(singUserURL); // Re-fetch the updated list of medicines
-      message.success("Medicine deleted successfully!");
-    } catch (error) {
-      message.error("Failed to delete medicine.");
-    }
+  const editMedicines = (medicine) => {
+    handleMedicineEdit(medicine, setEditMedicine, setIsFormVisible, form);
   };
-
   const showUpdateModal = () => {
     setIsUpdateFormVisible(true);
     form.setFieldsValue({
@@ -173,92 +153,41 @@ const UserCard = ({ user }) => {
     });
   };
 
-  const medicineColumns = [
-    {
-      title: "Medicine Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
-    },
-    {
-      title: "Days Remaining",
-      key: "daysRemaining",
-      align: "center",
-      render: (record) => {
-        return Math.floor(record.totalTablets / record.tabletsToTake);
-      },
-    },
-    {
-      title: "Tablets Remaining",
-      dataIndex: "totalTablets",
-      align: "center",
-    },
-    {
-      title: "Taking",
-      dataIndex: "tabletsToTake",
-      align: "center",
-    },
-    isMedicineUpdateVisible
-      ? {
-          title: "Actions",
-          key: "actions",
-          align: "center",
-          render: (medicine) => (
-            //!here is the two button
-            <div className="flex justify-center">
-              <Button
-                icon={<EditOutlined />}
-                onClick={() => handleMedicineEdit(medicine)}
-                style={{ marginRight: "8px" }}
-              />
-              <Popconfirm
-                title="Are you sure to delete this medicine?"
-                onConfirm={() => handleMedicineDelete(medicine._id)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button icon={<DeleteOutlined />} danger />
-              </Popconfirm>
-            </div>
-          ),
-        }
-      : {},
-  ];
-
-  //props for main modal
+  //1 props for main modal
   const mainModalProps = {
     user,
     isModalVisible,
     handleCancel,
     error,
     data,
-    medicineColumns,
     setIsFormVisible,
     showUpdateModal,
     showPriceModal,
     setIsMedicineUpdateVisible,
     isMedicineUpdateVisible,
     handleDelete,
+    deleteMedicine,
+    editMedicines,
   };
 
-  //props for add medicine modal
+  //2 props for add medicine modal
   const addMedicineModalProps = {
     editMedicine,
     isFormVisible,
     handleFormCancel,
     form,
-    handleMedicineUpdateFinish,
+    updateMedicine,
     onFinish,
   };
 
-  //props for priceinfo modal
+  //3 props for priceinfo modal
   const priceInfoModalProps = {
     isPriceVisible,
     handleClosePriceModal,
     medicineInfo,
   };
 
-  //props for update user modal
+  //4 props for update user modal
   const updateUserModalProps = {
     isUpdateFormVisible,
     handleFormCancel,
