@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Modal, Table, Button, Form, Input, message, Popconfirm } from "antd";
+import { Modal, Button, Form, Input, message, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
 import MainModal from "../Modals/MainModal";
 import AddMedicineModal from "../Modals/AddMedicineModal";
+import PriceInfroModal from "../Modals/PriceInfroModal";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -249,6 +250,13 @@ const UserCard = ({ user }) => {
     onFinish,
   };
 
+  //props for priceinfo modal
+  const priceInfoModalProps = {
+    isPriceVisible,
+    handleClosePriceModal,
+    medicineInfo,
+  };
+
   return (
     <>
       <div
@@ -274,35 +282,7 @@ const UserCard = ({ user }) => {
       <AddMedicineModal addMedicineModalProps={addMedicineModalProps} />
 
       {/*3 // Price modal */}
-      <Modal
-        title="Price Status"
-        visible={isPriceVisible}
-        onCancel={handleClosePriceModal}
-        footer={[
-          <div key="total">
-            <strong>Total Price:</strong> {medicineInfo?.total || 0}
-          </div>,
-        ]}
-      >
-        {/* Add the table here */}
-        <Table
-          dataSource={medicineInfo?.medicines || []} // Medicines data
-          columns={[
-            {
-              title: "Medicine Name",
-              dataIndex: "name",
-              key: "name",
-            },
-            {
-              title: "Price",
-              dataIndex: "price",
-              key: "price",
-            },
-          ]}
-          rowKey="name"
-          pagination={false}
-        />
-      </Modal>
+      <PriceInfroModal priceInfoModalProps={priceInfoModalProps} />
 
       {/*4 Update User Form Modal */}
       <Modal
