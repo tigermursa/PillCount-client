@@ -12,6 +12,7 @@ import UpdateUserModal from "../Modals/UpdateUserModal";
 import { handleMedicineDelete } from "@/utils/handleMedicineDelete";
 import { handleMedicineEdit } from "@/utils/handleMedicineEdit";
 import { handleMedicineUpdateFinish } from "@/utils/handleMedicineUpdateFinish";
+import { onUpdateUserFinish } from "@/utils/onUpdateUserFinish";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -99,22 +100,15 @@ const UserCard = ({ user }) => {
     }
   };
 
-  const onUpdateUserFinish = async (values) => {
-    try {
-      await fetch(`http://localhost:5000/api/user/update/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      mutate(getAllUsersURL); // Re-fetch the list of all users after updating
-      message.success("User updated successfully!");
-      setIsUpdateFormVisible(false); // Close the update form modal
-    } catch (error) {
-      message.error("Failed to update user.");
-    }
+  const updateUser = async (values) => {
+    await onUpdateUserFinish(
+      user._id,
+      values,
+      mutate,
+      getAllUsersURL,
+      message,
+      setIsUpdateFormVisible
+    );
   };
 
   const updateMedicine = async (values) => {
@@ -191,7 +185,7 @@ const UserCard = ({ user }) => {
   const updateUserModalProps = {
     isUpdateFormVisible,
     handleFormCancel,
-    onUpdateUserFinish,
+    updateUser,
     form,
   };
 

@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 
 const UpdateUserModal = ({ updateUserModalProps }) => {
-  const { isUpdateFormVisible, handleFormCancel, onUpdateUserFinish, form } =
+  const { isUpdateFormVisible, handleFormCancel, updateUser, form } =
     updateUserModalProps;
   return (
     <>
@@ -11,7 +11,7 @@ const UpdateUserModal = ({ updateUserModalProps }) => {
         onCancel={handleFormCancel}
         footer={null}
       >
-        <Form form={form} onFinish={onUpdateUserFinish} layout="vertical">
+        <Form form={form} onFinish={updateUser} layout="vertical">
           <Form.Item
             label="Name"
             name="name"
