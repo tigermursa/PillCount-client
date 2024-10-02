@@ -32,6 +32,7 @@ const UserCard = ({ user }) => {
     fetcher
   );
   // SWR for fetching single users medprice data
+  // eslint-disable-next-line no-unused-vars
   const { data: medicineInfo, error: medError } = useSWR(
     isModalVisible
       ? `http://localhost:5000/api/user/${user._id}/medicines`
@@ -53,6 +54,9 @@ const UserCard = ({ user }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
     setIsMedicineUpdateVisible(false);
+    setIsPriceVisible(false);
+  };
+  const handleClosePriceModal = () => {
     setIsPriceVisible(false);
   };
 
@@ -362,7 +366,7 @@ const UserCard = ({ user }) => {
       <Modal
         title="Price Status"
         visible={isPriceVisible}
-        onCancel={handleCancel}
+        onCancel={handleClosePriceModal}
         footer={[
           <div key="total">
             <strong>Total Price:</strong> {medicineInfo?.total || 0}
