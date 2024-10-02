@@ -17,16 +17,18 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "Pill Count",
-  description: "Track the pill of evetday life easily",
+  description: "Track the pill of everyday life easily",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <SessionWrapper>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+      <head>
+        
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SessionWrapper>
+          {/* Toast notifications */}
           <ToastContainer
             position="top-center"
             autoClose={2500}
@@ -40,9 +42,10 @@ export default function RootLayout({ children }) {
             pauseOnHover
             theme="colored"
           />
+          {/* The children will be your app's content */}
           {children}
-        </body>
-      </SessionWrapper>
+        </SessionWrapper>
+      </body>
     </html>
   );
 }
