@@ -31,6 +31,15 @@ const UserCard = ({ user }) => {
     isModalVisible ? `http://localhost:5000/api/user/${user._id}` : null,
     fetcher
   );
+  // SWR for fetching single users medprice data
+  const { data: medicineInfo, error: medError } = useSWR(
+    isModalVisible
+      ? `http://localhost:5000/api/user/${user._id}/medicines`
+      : null,
+    fetcher
+  );
+
+  console.log(medicineInfo);
 
   const singUserURL = `http://localhost:5000/api/user/${user._id}`;
   // Revalidate the users list after creating a new user
@@ -349,14 +358,36 @@ const UserCard = ({ user }) => {
           </Form.Item>
         </Form>
       </Modal>
-
-      {/* price modal */}
+      {/* //! Price modal */}
       <Modal
         title="Price Status"
         visible={isPriceVisible}
         onCancel={handleCancel}
-        footer={null}
-      >adde price here</Modal>
+        footer={[
+          <div key="total">
+            <strong>Total Price:</strong> {medicineInfo?.total || 0}
+          </div>,
+        ]}
+      >
+        {/* Add the table here */}
+        <Table
+          dataSource={medicineInfo?.medicines || []} // Medicines data
+          columns={[
+            {
+              title: "Medicine Name",
+              dataIndex: "name",
+              key: "name",
+            },
+            {
+              title: "Price",
+              dataIndex: "price",
+              key: "price",
+            },
+          ]}
+          rowKey="name"
+          pagination={false}
+        />
+      </Modal>
 
       {/* Update User Form Modal */}
       <Modal
