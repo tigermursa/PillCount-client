@@ -83,5 +83,5 @@ const Register = () => {
     </div>
   );
 };
-
+//ok so my register page is already done will modify it later
 export default Register;
