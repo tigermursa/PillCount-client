@@ -10,8 +10,7 @@ import { toast } from "react-toastify"; // Import toast
 import LoaderA from "@/components/ui/Loader/LoaderA/LoaderA";
 import UserCreateModal from "./UserCreateModal";
 import Error from "@/components/ui/Error/Error";
-
-const getAllUsersURL = "http://localhost:5000/api/user/get/all"; // Updated URL
+const getAllUsersURL = `${process.env.NEXT_PUBLIC_BASE_URL}/user/get/all`;
 
 const UserShowAndAdd = () => {
   const { data: users, error } = useSWR(getAllUsersURL, fetcher);
@@ -57,8 +56,8 @@ const UserShowAndAdd = () => {
   return (
     <div className="flex flex-wrap space-x-8 justify-center items-center mt-10 h-screen">
       {/* Display user cards for each user */}
-      {users.map((user) => (
-        <UserCard key={user._id} user={user} />
+      {users?.map((user) => (
+        <UserCard key={user?._id} user={user} />
       ))}
       {/* Plus card to add new user */}
       <div
