@@ -2,7 +2,7 @@ import HomePge from "@/components/page-specific/home/HomePage/HomePge";
 
 const page = () => {
   return (
-    <div className="border-2 border-red-700">
+    <div className="">
       <HomePge />
     </div>
   );
