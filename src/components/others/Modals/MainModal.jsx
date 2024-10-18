@@ -31,14 +31,7 @@ const MainModal = ({ mainModalProps }) => {
       key: "name",
       align: "center",
     },
-    {
-      title: "Days Remaining",
-      key: "daysRemaining",
-      align: "center",
-      render: (record) => {
-        return Math.floor(record.totalTablets / record.tabletsToTake);
-      },
-    },
+    
     {
       title: "Tablets Remaining",
       dataIndex: "totalTablets",
@@ -48,6 +41,14 @@ const MainModal = ({ mainModalProps }) => {
       title: "Taking",
       dataIndex: "tabletsToTake",
       align: "center",
+    },
+    {
+      title: "Days Remaining",
+      key: "daysRemaining",
+      align: "center",
+      render: (record) => {
+        return Math.floor(record.totalTablets / record.tabletsToTake);
+      },
     },
     isMedicineUpdateVisible
       ? {

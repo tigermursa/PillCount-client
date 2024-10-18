@@ -31,13 +31,17 @@ const AddMedicineModal = ({ addMedicineModalProps }) => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Tablets to Take"
+            label="Daily Tablet taking"
             name="tabletsToTake"
             rules={[
-              { required: true, message: "Please input tablets to take!" },
-            ]}
+              { required: true, message: "Please select total tablets!" },
+            ]} // Updated message
           >
-            <Input type="number" />
+            <Select placeholder="Select total days" style={{ width: "100%" }}>
+              <Option value={1}>1</Option>
+              <Option value={2}>2</Option>
+              <Option value={3}>3</Option>
+            </Select>
           </Form.Item>
           <Form.Item
             label="Total Days"
