@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Form, message } from "antd";
+import { Form, message, Select, Option } from "antd";
 
 import useSWR, { mutate } from "swr";
 import { avaters } from "@/data/avaterData";
@@ -157,6 +157,8 @@ const UserCard = ({ user }) => {
     form,
     updateMedicine,
     onFinish,
+    Select,
+    Option,
   };
 
   //3 props for priceinfo modal

@@ -1,5 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
-
+import {Select } from "antd";
+const { Option } = Select;
 const AddMedicineModal = ({ addMedicineModalProps }) => {
   const {
     editMedicine,
@@ -30,13 +31,6 @@ const AddMedicineModal = ({ addMedicineModalProps }) => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Total Tablets"
-            name="totalTablets"
-            rules={[{ required: true, message: "Please input total tablets!" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
             label="Tablets to Take"
             name="tabletsToTake"
             rules={[
@@ -45,6 +39,21 @@ const AddMedicineModal = ({ addMedicineModalProps }) => {
           >
             <Input type="number" />
           </Form.Item>
+          <Form.Item
+            label="Total Days"
+            name="totalTablets"
+            rules={[
+              { required: true, message: "Please select total tablets!" },
+            ]} // Updated message
+          >
+            <Select placeholder="Select total days" style={{ width: "100%" }}>
+              <Option value={15}>15</Option>
+              <Option value={30}>30</Option>
+              <Option value={45}>45</Option>
+              <Option value={60}>60</Option>
+            </Select>
+          </Form.Item>
+
           <Form.Item
             label="Price"
             name="price"
