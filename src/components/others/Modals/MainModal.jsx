@@ -50,6 +50,12 @@ const MainModal = ({ mainModalProps }) => {
         return Math.floor(record.totalTablets / record.tabletsToTake);
       },
     },
+    {
+      title: "Medicine Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
     isMedicineUpdateVisible
       ? {
           title: "Actions",
