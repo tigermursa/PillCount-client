@@ -1,3 +1,4 @@
 1) Need to update form to take info about monthly view
 2) first will make cutom node authintication 
 3) then will add google next authintication
+4) need to make refactor of some big components
